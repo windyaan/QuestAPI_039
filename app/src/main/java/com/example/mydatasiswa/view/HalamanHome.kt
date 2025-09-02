@@ -110,7 +110,7 @@ fun HomeBody(
 @Composable
 fun LoadingScreen(modifier: Modifier = Modifier){
     Image(modifier = modifier.size(200.dp),
-        painter = painterResource(R.drawable.loading_img),
+        painter = painterResource(R.drawable.loading),
         contentDescription = stringResource(R.string.loading))
 }
 
