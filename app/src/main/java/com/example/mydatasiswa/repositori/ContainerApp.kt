@@ -12,7 +12,7 @@ interface ContainerApp {
 }
 
 class DefaultContainerApp : ContainerApp{
-    private val baseurl = "http://10.0.22/umyTI/"
+    private val baseurl = "http://10.0.2.2/umyTI/"
 
     private val retrofit: Retrofit = Retrofit.Builder()
         .baseUrl(baseurl)
