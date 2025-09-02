@@ -1,16 +1,15 @@
 package com.example.mydatasiswa.viewmodel
 
-import android.net.http.HttpException
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import androidx.lifecycle.viewmodel.viewModelFactory
 import com.example.mydatasiswa.modeldata.DataSiswa
-import com.example.mydatasiswa.repositori.JaringanDataRepositoryDataSiswa
 import com.example.mydatasiswa.repositori.RepositoryDataSiswa
 import kotlinx.coroutines.launch
+import retrofit2.HttpException
+import java.io.IOException
 
 sealed interface StatusUiSiswa{
     data class Success(val siswa: List<DataSiswa> = listOf()) :StatusUiSiswa
@@ -31,10 +30,10 @@ class HomeViewModel (private val repositoryDataSiswa: RepositoryDataSiswa): View
             listSiswa = StatusUiSiswa.Lodaing
             listSiswa = try {
                 StatusUiSiswa.Success(repositoryDataSiswa.getDataSiswa())
-            }catch (e:IDException){
+            }catch (e:IOException){
                 StatusUiSiswa.Error
             }
-            catch (e:HttpException){
+            catch (e: HttpException){
                 StatusUiSiswa.Error
             }
         }
