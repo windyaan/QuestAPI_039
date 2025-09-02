@@ -23,7 +23,6 @@ class DefaultContainerApp : ContainerApp{
                 isLenient = true
             }.asConverterFactory("application/json".toMediaType())
         )
-        //.client(klient)
         .build()
 
     private val retrofitService : ServiceApiSiswa by lazy {
