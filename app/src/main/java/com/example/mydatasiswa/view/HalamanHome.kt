@@ -175,11 +175,11 @@ fun ItemSiswa(
                     text = siswa.telpon,
                     style = MaterialTheme.typography.titleMedium,
                 )
-                Text(
-                    text = siswa.alamat,
-                    style = MaterialTheme.typography.titleLarge,
-                )
             }
+            Text(
+                text = siswa.alamat,
+                style = MaterialTheme.typography.titleLarge,
+            )
         }
     }
 }
