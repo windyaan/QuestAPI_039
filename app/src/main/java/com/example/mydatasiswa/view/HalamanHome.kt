@@ -1,6 +1,7 @@
 package com.example.mydatasiswa.view
 
 import androidx.compose.foundation.Image
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -46,6 +47,7 @@ import com.example.mydatasiswa.viewmodel.StatusUiSiswa
 fun HomeScreen(
     //tambah parameter
     navigateToItemEntry: () -> Unit,
+    navigateToItemUpdate: (Int) -> Unit,
     modifier: Modifier = Modifier,
     viewModel: HomeViewModel = viewModel(factory = PenyediaViewModel.Factory)
 ){
@@ -75,6 +77,7 @@ fun HomeScreen(
     ){ innerPadding ->
         HomeBody(
             statusUiSiswa = viewModel.listSiswa,
+            onSiswaClick = navigateToItemUpdate,
             retryAction = viewModel::loadSiswa,
             modifier = modifier
                 .padding(innerPadding)
@@ -86,6 +89,7 @@ fun HomeScreen(
 @Composable
 fun HomeBody(
     statusUiSiswa: StatusUiSiswa,
+    onSiswaClick: (Int) -> Unit,
     retryAction: () -> Unit,
     modifier: Modifier = Modifier
 ){
@@ -95,7 +99,8 @@ fun HomeBody(
     ) {
         when(statusUiSiswa){
             is StatusUiSiswa.Lodaing -> LoadingScreen()
-            is StatusUiSiswa.Success -> DaftarSiswa(itemSiswa = statusUiSiswa.siswa)
+            is StatusUiSiswa.Success -> DaftarSiswa(itemSiswa = statusUiSiswa.siswa,
+                onSiswaClick = {onSiswaClick(it.id)})
             is StatusUiSiswa.Error -> ErrorScreen(
                 retryAction, modifier = modifier.fillMaxSize()
             )
@@ -127,6 +132,7 @@ fun ErrorScreen(retryException: () -> Unit, modifier: Modifier = Modifier){
 @Composable
 fun DaftarSiswa(
     itemSiswa: List<DataSiswa>,
+    onSiswaClick: (DataSiswa) -> Unit,
     modifier: Modifier = Modifier
 ){
     LazyColumn (modifier = Modifier){
@@ -136,6 +142,7 @@ fun DaftarSiswa(
                 siswa = person,
                 modifier = Modifier
                     .padding(dimensionResource(id = R.dimen.padding_small))
+                    .clickable { onSiswaClick(person) }
             )
         }
     }
