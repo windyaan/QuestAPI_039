@@ -12,12 +12,16 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.navigation.NavHostController
+import androidx.navigation.NavType
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
+import androidx.navigation.navArgument
 import com.example.mydatasiswa.R
+import com.example.mydatasiswa.uicontroller.route.DestinasiDetail
 import com.example.mydatasiswa.uicontroller.route.DestinasiEntry
 import com.example.mydatasiswa.uicontroller.route.DestinasiHome
+import com.example.mydatasiswa.view.DetailSiswaScreen
 import com.example.mydatasiswa.view.EntrySiswaScreen
 import com.example.mydatasiswa.view.HomeScreen
 
@@ -35,10 +39,18 @@ fun HostNavigasi(
     NavHost (navController = navController, startDestination = DestinasiHome.route,
         modifier = Modifier){
         composable(DestinasiHome.route){
-            HomeScreen(navigateToItemEntry = {navController.navigate(DestinasiEntry.route)})
+            HomeScreen(navigateToItemEntry = {navController.navigate(DestinasiEntry.route)},
+                navigateToItemUpdate = {
+                    navController.navigate("${DestinasiDetail.route}/${it}")
+                })
         }
         composable(DestinasiEntry.route){
             EntrySiswaScreen(navigateBack = {navController.navigate(DestinasiHome.route)})
+        }
+        composable(DestinasiDetail.routeWithArg, arguments = listOf(navArgument(DestinasiDetail.itemIdArg){
+            type = NavType.IntType })
+        ){
+            DetailSiswaScreen(navigateBack = { navController.navigate(DestinasiHome.route) })
         }
     }
 }
