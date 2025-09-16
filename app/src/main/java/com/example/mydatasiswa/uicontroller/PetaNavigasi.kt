@@ -19,9 +19,11 @@ import androidx.navigation.compose.rememberNavController
 import androidx.navigation.navArgument
 import com.example.mydatasiswa.R
 import com.example.mydatasiswa.uicontroller.route.DestinasiDetail
+import com.example.mydatasiswa.uicontroller.route.DestinasiEdit
 import com.example.mydatasiswa.uicontroller.route.DestinasiEntry
 import com.example.mydatasiswa.uicontroller.route.DestinasiHome
 import com.example.mydatasiswa.view.DetailSiswaScreen
+import com.example.mydatasiswa.view.EditSiswaScreen
 import com.example.mydatasiswa.view.EntrySiswaScreen
 import com.example.mydatasiswa.view.HomeScreen
 
@@ -51,6 +53,17 @@ fun HostNavigasi(
             type = NavType.IntType })
         ){
             DetailSiswaScreen(navigateBack = { navController.navigate(DestinasiHome.route) })
+        }
+        composable(
+            route = DestinasiEdit.routeWithArg,
+            arguments = listOf(navArgument(DestinasiEdit.itemIdArg) {
+                type = NavType.IntType
+            })
+        ) {
+            EditSiswaScreen(
+                navigateBack = { navController.navigate(DestinasiHome.route) },
+                onNavigateUp = { navController.navigateUp() }
+            )
         }
     }
 }
